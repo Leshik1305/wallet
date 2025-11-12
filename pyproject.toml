@@ -8,3 +8,4 @@ uvicorn = {extras = ["standard"], version = "^0.38.0"}
 pydantic = "^2.12.4"
 pydantic-settings = "^2.12.0"
 sqlalchemy = {extras = ["asincio"], version = "^2.0.44"}
+asyncpg = "^0.30.0"
