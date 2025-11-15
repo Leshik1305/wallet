@@ -1,9 +1,15 @@
 from datetime import datetime
 from decimal import Decimal
+from enum import StrEnum
 from typing import Annotated
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field
+
+
+class OperationEnum(StrEnum):
+    DEPOSIT = "deposit"
+    WITHDRAW = "withdraw"
 
 
 class WalletBase(BaseModel):
@@ -23,3 +29,9 @@ class WalletCreate(WalletBase):
 
 class WalletRead(WalletBase):
     pass
+
+
+class WalletUpdate(WalletBase):
+    amount: Annotated[Decimal, Field(..., gt=0)]
+    updated: Annotated[datetime, Field(default_factory=datetime.now)]
+    operation: Annotated[OperationEnum, Field(default=OperationEnum.DEPOSIT)]
