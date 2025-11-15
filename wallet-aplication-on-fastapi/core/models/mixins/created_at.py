@@ -10,7 +10,8 @@ def get_current_dt() -> datetime:
 
 
 class CreatedAtMixin:
-    created_at: Mapped[datetime] = mapped_column(DateTime,
-        default=get_current_dt,
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=datetime.now(timezone.utc),
         server_default=func.now(),
     )

@@ -13,10 +13,8 @@ class Wallet(IdUuidPkMixin, CreatedAtMixin, Base):
         Numeric(10, 2),
     )
     updated: Mapped[datetime | None] = mapped_column(
-        DateTime(),
+        DateTime(timezone=True),
         nullable=True,
-        default=None,
-        server_default=None
     )
     is_active: Mapped[bool] = mapped_column(
         Boolean,

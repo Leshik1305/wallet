@@ -7,4 +7,4 @@ from .wallets import router as wallets_router
 router = APIRouter(
     prefix=settings.api.v1.prefix,
 )
-router.include_router(wallets_router, prefix=settings.api.v1.wallets)
+router.include_router(wallets_router, prefix=settings.api.v1.wallets,)
