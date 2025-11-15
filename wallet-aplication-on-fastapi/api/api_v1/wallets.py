@@ -1,4 +1,5 @@
 from typing import Annotated
+from uuid import UUID
 
 from fastapi import APIRouter, status
 from fastapi.params import Depends
@@ -19,5 +20,17 @@ async def create_wallet(
     wallet = await wallets_crud.create_wallet(
         session=session,
         wallet_create=wallet_create,
+    )
+    return wallet
+
+
+@router.get("/{id}", response_model=WalletRead, status_code=status.HTTP_200_OK)
+async def get_wallet_by_id(
+    id: UUID,
+    session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
+):
+    wallet = await wallets_crud.get_wallet(
+        session=session,
+        id=id,
     )
     return wallet
