@@ -1,5 +1,3 @@
-
-
 def camel_case_to_snake_case(input_str: str) -> str:
     """Изменение camel case на snake case"""
     chars = []
