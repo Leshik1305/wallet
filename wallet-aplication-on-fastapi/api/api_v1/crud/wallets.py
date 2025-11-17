@@ -4,7 +4,9 @@ from fastapi import HTTPException, status
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+
 from core.models import Wallet
+from core.models.mixins.created_at import get_current_dt
 from core.schemas.wallet import WalletCreate, WalletUpdate, OperationEnum
 
 
@@ -45,7 +47,7 @@ async def change_balance(
             .where(Wallet.id == id)
             .values(
                 balance=wallet.balance + update_wallet.amount,
-                updated=update_wallet.updated,
+                updated=get_current_dt(),
             )
         )
         await session.commit()
@@ -61,7 +63,7 @@ async def change_balance(
         .where(Wallet.id == id)
         .values(
             balance=wallet.balance - update_wallet.amount,
-            updated=update_wallet.updated,
+            updated=get_current_dt(),
         )
     )
     await session.commit()
