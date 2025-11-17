@@ -47,4 +47,4 @@ class Settings(BaseSettings):
     db: DatabaseConfig
 
 
-settings = Settings()
+settings = Settings(db={"url": "postgresql+asyncpg://admin:1234@localhost:5432/wallet"})
