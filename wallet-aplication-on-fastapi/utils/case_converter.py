@@ -1,6 +1,7 @@
 
 
 def camel_case_to_snake_case(input_str: str) -> str:
+    """Изменение camel case на snake case"""
     chars = []
     for c_idx, char in enumerate(input_str):
         if c_idx and char.isupper():

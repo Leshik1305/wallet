@@ -5,6 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 
 def get_current_dt() -> datetime:
+    """Получение текущего времени"""
     dt = datetime.now(tz=timezone.utc)
     return dt.replace(tzinfo=None)
 

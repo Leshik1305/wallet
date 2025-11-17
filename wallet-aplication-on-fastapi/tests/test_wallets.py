@@ -35,6 +35,7 @@ async def client():
 
 @pytest.mark.anyio
 async def test_create_wallet(client):
+    """Тест на создание нового кошелька"""
     response = await client.post("/api/v1/wallets", json={"balance": 100})
     assert response.status_code == 201
     data = response.json()
@@ -47,6 +48,7 @@ async def test_create_wallet(client):
 
 @pytest.mark.anyio
 async def test_read_wallet(client):
+    """Тест на получение кошелька по UUID"""
     response = await client.post("/api/v1/wallets", json={"balance": 100})
     wallet_data = response.json()
     wallet_uuid = wallet_data["id"]
@@ -66,6 +68,7 @@ async def test_read_wallet(client):
 
 @pytest.mark.anyio
 async def test_update_wallet(client):
+    """Тесты на изменение баланса кошелька"""
     response = await client.post("/api/v1/wallets", json={"balance": 100})
     wallet_data = response.json()
     wallet_id = wallet_data["id"]

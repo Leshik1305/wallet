@@ -14,6 +14,7 @@ async def create_wallet(
     session: AsyncSession,
     wallet_create: WalletCreate,
 ) -> Wallet:
+    """Создание нового кошелька"""
     wallet = Wallet(**wallet_create.model_dump())
     session.add(wallet)
     await session.commit()
@@ -25,6 +26,7 @@ async def get_wallet(
     session: AsyncSession,
     id: UUID,
 ) -> Wallet:
+    """Получение кошелька до UUID"""
     stmt = select(Wallet).where(Wallet.id == id, Wallet.is_active)
     wallet = await session.scalar(stmt)
     if not wallet:
@@ -40,6 +42,7 @@ async def change_balance(
     id: UUID,
     update_wallet: WalletUpdate,
 ) -> Wallet:
+    """Изменение баланса кошелька с проверкой (увеличение и уменьшение с проверкой на неотрицательный баланс"""
     wallet = await get_wallet(session=session, id=id)
     if update_wallet.operation == OperationEnum.DEPOSIT:
         await session.execute(
