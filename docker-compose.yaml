@@ -1,0 +1,46 @@
+services:
+  app:
+    build:
+      dockerfile: ./docker-build/app/Dockerfile
+      context: ./
+    command: uvicorn main:main_app --host 127.0.0.1
+    environment:
+      APP_CONFIG__DB__URL: postgresql+asyncpg://admin:1234@pg:5432/wallet
+      APP_CONFIG__DB__ECHO: 0
+
+    ports:
+      - "8000:8000"
+    depends_on:
+      pg:
+        condition: service_healthy
+
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./fastapi-application
+          target: /app
+        - action: rebuild
+          path: ./poetry.lock
+
+  pg:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: wallet
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1234
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+
+
+volumes:
+  pgdata:
+
